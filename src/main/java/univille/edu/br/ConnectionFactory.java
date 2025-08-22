@@ -15,9 +15,9 @@ public class ConnectionFactory {
         return instance;
     }
     public Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/";
+        String url = "jdbc:mysql://localhost:3306/imobiliaria";
         String user = "root";
-        String password = "univille";
+        String password = "mysql300805";
         return DriverManager.getConnection(url, user, password);
     }
 }

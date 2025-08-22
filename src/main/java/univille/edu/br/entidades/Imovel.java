@@ -3,13 +3,13 @@ package univille.edu.br.entidades;
 public class Imovel {
 
     private long idImovel;
-    private String nomeImovel;
+    private String endereco;
     private int quantidadeQuartos;
     private boolean disponivel;
 
     public Imovel(long idImovel, String nomeImovel, int quantidadeQuartos, boolean disponivel) {
         this.idImovel = idImovel;
-        this.nomeImovel = nomeImovel;
+        this.endereco = nomeImovel;
         this.quantidadeQuartos = quantidadeQuartos;
         this.disponivel = disponivel;
     }
@@ -22,12 +22,12 @@ public class Imovel {
         this.idImovel = idImovel;
     }
 
-    public String getNomeImovel() {
-        return nomeImovel;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setNomeImovel(String nomeImovel) {
-        this.nomeImovel = nomeImovel;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public int getQuantidadeQuartos() {
