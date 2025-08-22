@@ -87,10 +87,10 @@ public class App
                     case "aluguel listar ativos":
                         aluguelService.listarAtivos();
                         break;
-                    case "listar melhores clientes":
+                    case "aluguel listar melhores clientes":
                         aluguelService.listarMelhoresClientes();
                         break;
-                    case "listar contratos expirando":
+                    case "aluguel listar contratos expirando":
                         aluguelService.listarContratosExpirando();
                         break;
                     case "aluguel inserir":
@@ -102,7 +102,7 @@ public class App
                         aluguelService.alterar(aluguelAtualizar);
                         break;
                     case "aluguel excluir":
-                        System.out.println("ID: ");
+                        System.out.print("ID: ");
                         aluguelService.remover(sc.nextLong());
                         break;
                     /// ////////////////////////////////////////////////// ///
@@ -130,11 +130,11 @@ public class App
     private static Imovel setImovel(Scanner sc) {
         System.out.print("ID: ");
         long id  = sc.nextLong();
-        System.out.println("Endereço: ");
+        System.out.print("Endereço: ");
         String endereco = sc.next();
-        System.out.println("Quantidade Quartos: ");
+        System.out.print("Quantidade Quartos: ");
         int quantidadeQuartos = sc.nextInt();
-        System.out.println("Disponível (true/false): ");
+        System.out.print("Disponível (true/false): ");
         boolean disponivel = sc.nextBoolean();
         return new Imovel(id,endereco,quantidadeQuartos,disponivel);
     }
