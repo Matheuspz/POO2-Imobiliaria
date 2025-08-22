@@ -1,5 +1,7 @@
 package univille.edu.br.DAO;
 
+import univille.edu.br.entidades.Aluguel;
+import univille.edu.br.entidades.Cliente;
 import univille.edu.br.entidades.Imovel;
 
 import java.sql.Connection;
@@ -24,12 +26,7 @@ public class ImovelDAO extends BaseDAO implements DAO<Imovel> {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Imovel imovel = new Imovel(
-                        rs.getInt("idImovel"),
-                        rs.getString("endereco"),
-                        rs.getInt("qtdComodos"),
-                        rs.getBoolean("disponivel")
-                );
+                Imovel imovel = setImovel(rs);
                 return Optional.of(imovel);
             }
         } catch (SQLException e) {
@@ -47,12 +44,7 @@ public class ImovelDAO extends BaseDAO implements DAO<Imovel> {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Imovel imovel = new Imovel(
-                        rs.getInt("idImovel"),
-                        rs.getString("endereco"),
-                        rs.getInt("qtdComodos"),
-                        rs.getBoolean("disponivel")
-                );
+                Imovel imovel = setImovel(rs);
                 imovels.add(imovel);
             }
         } catch (SQLException e) {
@@ -61,14 +53,28 @@ public class ImovelDAO extends BaseDAO implements DAO<Imovel> {
         return imovels;
     }
 
+    public List<Imovel> listarDisponivel() {
+        List<Imovel> imovels = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM imovel WHERE disponivel = TRUE";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Imovel imovel = setImovel(rs);
+                imovels.add(imovel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return imovels;
+    }
+
+
     @Override
     public void inserir(Imovel imovel) {
         try {
             String sql = "INSERT INTO imovel (endereco, qtdComodos, disponivel) VALUES (?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, imovel.getEndereco());
-            ps.setInt(2, imovel.getQuantidadeQuartos());
-            ps.setBoolean(3, imovel.isDisponivel());
+            PreparedStatement ps = prepareImovel(imovel, sql);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,10 +85,7 @@ public class ImovelDAO extends BaseDAO implements DAO<Imovel> {
     public void alterar(Imovel imovel) {
         try {
             String sql = "UPDATE imovel SET endereco=?, qtdComodos=?, disponivel=? WHERE idImovel=?;";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, imovel.getEndereco());
-            ps.setInt(2, imovel.getQuantidadeQuartos());
-            ps.setBoolean(3, imovel.isDisponivel());
+            PreparedStatement ps = prepareImovel(imovel, sql);
             ps.setLong(4, imovel.getIdImovel());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -101,4 +104,23 @@ public class ImovelDAO extends BaseDAO implements DAO<Imovel> {
             e.printStackTrace();
         }
     }
+
+    private static Imovel setImovel(ResultSet rs) throws SQLException {
+        return new Imovel(
+                rs.getInt("idImovel"),
+                rs.getString("endereco"),
+                rs.getInt("qtdComodos"),
+                rs.getBoolean("disponivel")
+        );
+    }
+
+    private PreparedStatement prepareImovel(Imovel imovel, String sql) throws SQLException {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, imovel.getEndereco());
+        ps.setInt(2, imovel.getQuantidadeQuartos());
+        ps.setBoolean(3, imovel.isDisponivel());
+        return ps;
+    }
+
+
 }

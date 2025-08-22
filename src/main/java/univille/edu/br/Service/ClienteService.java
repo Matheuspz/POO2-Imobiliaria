@@ -54,11 +54,13 @@ public class ClienteService implements Service<Cliente> {
 
     @Override
     public void alterar(Cliente cliente) {
+        clienteDAO.alterar(cliente);
         System.out.println("Cliente alterado com sucesso");
     }
 
     @Override
     public void remover(long id) {
+        clienteDAO.remover(id);
         System.out.println("Cliente removido com sucesso");
     }
 }

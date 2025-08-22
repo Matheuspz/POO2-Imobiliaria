@@ -47,6 +47,22 @@ public class ImovelService implements Service<Imovel> {
         }
     }
 
+    public void listarDisponivel() {
+        List<Imovel> imovels = imovelDAO.listarDisponivel();
+
+        if(imovels.isEmpty()){
+            System.out.println("Nenhum Imovel disponivel");
+        } else {
+            for(Imovel imovel : imovels){
+                System.out.println("idImovel: " + imovel.getIdImovel() + " | " +
+                        "Endereco: " + imovel.getEndereco() + " | " +
+                        "Quantidade de Quartos: " + imovel.getQuantidadeQuartos() + " | " +
+                        "Disponibilidade: " + imovel.isDisponivel());
+            }
+        }
+    }
+
+
     @Override
     public void inserir(Imovel imovel) {
         imovelDAO.inserir(imovel);

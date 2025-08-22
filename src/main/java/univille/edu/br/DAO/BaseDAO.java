@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class BaseDAO {
 
-    protected Connection con() throws SQLException {
+    public Connection con() throws SQLException {
         return ConnectionFactory.getInstance().getConnection();
     }
 }

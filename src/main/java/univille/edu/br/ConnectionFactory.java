@@ -17,7 +17,7 @@ public class ConnectionFactory {
     public Connection getConnection() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/imobiliaria";
         String user = "root";
-        String password = "mysql300805";
+        String password = "univille";
         return DriverManager.getConnection(url, user, password);
     }
 }
